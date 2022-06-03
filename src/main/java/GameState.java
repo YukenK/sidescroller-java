@@ -2,6 +2,8 @@ import java.util.HashMap;
 
 public class GameState { // Multiple instances should be able to be instantiated, for multiple games on a server.
     // Avoid throwing a bunch of pointers around so GC doesn't get confused.
+    double delta_time; // Set every tick.
+    double current_time;
     HashMap<Integer, Entity> entities;
     HashMap<String, GameMap> game_maps;
     public GameState() {

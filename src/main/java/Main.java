@@ -9,7 +9,6 @@ public class Main {
         while (!WindowShouldClose()) {
             BeginDrawing();
             ClearBackground(RAYWHITE);
-            double delta_time = GetFrameTime();
 
             EndDrawing();
         }

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Optional;
 
-public class Entity {
+public abstract class Entity {
     EnumSet<CollisionType> collision_types;
     Jaylib.Vector2 collider;
     Jaylib.Vector2 position;
@@ -13,6 +13,7 @@ public class Entity {
         collider = new Jaylib.Vector2(32, 32); // Default collider is 1 tile.
         position = new Jaylib.Vector2(0, 0);
     }
+    abstract void Destroy(GameState game_state, Entity entity);
     boolean DoesCollide(Entity entity) {
         return true;
     }
@@ -26,6 +27,9 @@ public class Entity {
         boolean can_move_x = true;
         boolean can_move_y = true;
         for (Entity entity : collisions) {
+            if (this.collision_types.contains(CollisionType.IGNORE_MOVABLE_COLLISION) && entity.collision_types.contains(CollisionType.ENEMY)) {
+                continue;
+            }
             if (!can_move_x && !can_move_y) {
                 this.position.x(old_position.x());
                 this.position.y(old_position.y());

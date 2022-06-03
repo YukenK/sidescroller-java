@@ -20,12 +20,12 @@ public abstract class Movable extends Entity {
         Jaylib.Vector2 new_position = new Jaylib.Vector2((float) (this.position.x() + this.velocity.x() * delta_time), (float) (this.position.y() + this.velocity.y() * delta_time));
         Optional<ArrayList<Entity>> collisions = this.SetPosition(game_state, new_position, game_state.GetMap(this.map), true);
         collisions.ifPresent(entities -> {
-            for (Entity entity : entities) this.TryCollide(entity);
+            for (Entity entity : entities) this.TryCollide(game_state, entity);
         });
     }
-    abstract void TryCollide(Entity entity); // Base entities can't move, and therefore will never need to try and collide with something.
-    public void tick(GameState game_state, double delta_time) {
-        this.gravity(delta_time);
-        this.movement(game_state, delta_time);
+    abstract void TryCollide(GameState game_state, Entity entity); // Base entities can't move, and therefore will never need to try and collide with something.
+    public void tick(GameState game_state) {
+        this.gravity(game_state.delta_time);
+        this.movement(game_state, game_state.delta_time);
     }
 }
