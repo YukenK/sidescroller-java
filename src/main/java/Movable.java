@@ -3,7 +3,7 @@ import com.raylib.Jaylib;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class Movable extends Entity {
+public abstract class Movable extends Entity {
     Jaylib.Vector2 move_direction;
     Jaylib.Vector2 velocity;
     double gravity = 9.8;
@@ -18,8 +18,12 @@ public class Movable extends Entity {
     }
     void movement(GameState game_state, double delta_time) {
         Jaylib.Vector2 new_position = new Jaylib.Vector2((float) (this.position.x() + this.velocity.x() * delta_time), (float) (this.position.y() + this.velocity.y() * delta_time));
-        Optional<ArrayList<Entity>> collisions = this.SetPosition(game_state, new_position, game_state.GetEntityMap(this.id), true);
+        Optional<ArrayList<Entity>> collisions = this.SetPosition(game_state, new_position, game_state.GetMap(this.map), true);
+        collisions.ifPresent(entities -> {
+            for (Entity entity : entities) this.TryCollide(entity);
+        });
     }
+    abstract void TryCollide(Entity entity); // Base entities can't move, and therefore will never need to try and collide with something.
     public void tick(GameState game_state, double delta_time) {
         this.gravity(delta_time);
         this.movement(game_state, delta_time);

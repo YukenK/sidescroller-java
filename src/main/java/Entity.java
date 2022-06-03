@@ -1,8 +1,10 @@
 import com.raylib.Jaylib;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.Optional;
 
 public class Entity {
+    EnumSet<CollisionType> collision_types;
     Jaylib.Vector2 collider;
     Jaylib.Vector2 position;
     Integer id;
