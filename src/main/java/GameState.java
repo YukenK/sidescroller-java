@@ -23,4 +23,7 @@ public class GameState { // Multiple instances should be able to be instantiated
         map.entities.add(entity.id);
         entity.map = map_name;
     }
+    public GameMap GetEntityMap(Integer id) {
+
+    }
 }
